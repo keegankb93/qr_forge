@@ -9,3 +9,9 @@ Style/StringLiteralsInInterpolation:
 
 Metrics/MethodLength:
   Max: 50
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Max: 10

@@ -1,12 +1,29 @@
 PATH
   remote: .
   specs:
-    qr_forge (0.1.0)
+    qr_forge (0.9.0)
+      base64 (~> 0.3.0)
+      nokogiri (~> 1.18)
+      rqrcode_core (~> 2.0)
+      vips (~> 8.15)
+      zeitwerk (~> 2.6)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     ast (2.4.3)
+    base64 (0.3.0)
+    capybara (3.40.0)
+      addressable
+      matrix
+      mini_mime (>= 0.1.3)
+      nokogiri (~> 1.11)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      regexp_parser (>= 1.5, < 3.0)
+      xpath (~> 3.2)
     date (3.4.1)
     diff-lcs (1.6.2)
     erb (5.0.1)
@@ -19,6 +36,8 @@ GEM
     json (2.12.2)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
+    matrix (0.4.2)
+    mini_mime (1.1.5)
     nokogiri (1.18.8-arm64-darwin)
       racc (~> 1.4)
     parallel (1.27.0)
@@ -32,7 +51,11 @@ GEM
     psych (5.2.6)
       date
       stringio
+    public_suffix (6.0.2)
     racc (1.8.1)
+    rack (3.1.16)
+    rack-test (2.2.0)
+      rack (>= 1.3)
     rainbow (3.1.1)
     rake (13.3.0)
     rdoc (6.14.0)
@@ -76,19 +99,20 @@ GEM
     unicode-emoji (4.0.4)
     vips (8.15.1)
       ffi (~> 1.12)
+    xpath (3.2.0)
+      nokogiri (~> 1.8)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   arm64-darwin-24
 
 DEPENDENCIES
+  capybara (~> 3.40)
   irb
-  nokogiri (~> 1.18)
   qr_forge!
   rake (~> 13.0)
-  rqrcode_core (~> 2.0)
   rspec (~> 3.0)
   rubocop (~> 1.21)
-  vips (~> 8.15)
 
 BUNDLED WITH
    2.6.9

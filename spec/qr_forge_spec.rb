@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "rspec"
+require "rspec/capybara"
+
 RSpec.describe QrForge do
   it "has a version number" do
     expect(QrForge::VERSION).not_to be nil

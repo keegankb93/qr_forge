@@ -1,27 +1,25 @@
 # frozen_string_literal: true
 
-require "vips"
-require_relative "renderer"
-require_relative "exporter"
-
 module QrForge
   #
   # Entry point for building QRCodes
   class Forge
-    DEFAULT_DESIGNS = {
-      outer_eye: ::QrForge::Designs::EyeOuter::Circle,
-      inner_eye: ::QrForge::Designs::EyeInner::Circle,
-      module: ::QrForge::Designs::Module::Circle
-    }.freeze
 
-    def self.build(text:, size: 6, designs: {}, export_options: {}, design_options: {})
-      new(text:, size:, designs:, export_options:, design_options:).build
+    def initialize(text:, config:)
+      version = config.dig(:qr, :version)
+
+      @data = QrForge::QrData.new(text:, version:)
+      @renderer = QrForge::Renderer.new(qr_data: @data, config:)
+      @exporter = QrForge::Exporter.new(config:)
     end
 
-    def initialize(text:, size:, designs:, export_options:, design_options:)
-      @data = QrForge::QrData.new(text:, size:)
-      @renderer = QrForge::Renderer.new(qr_data: @data, designs: DEFAULT_DESIGNS.merge(designs), design_options:)
-      @exporter = QrForge::Exporter.new(size:, canvas_size: @renderer.canvas_size, export_options:)
+    #
+    # Builds a QR code with the given parameters.
+    # @param text [String] The text/data to encode in the QR code
+    # @param size [Integer] The size of the QR code in modules [1-40]
+    # @return [String, StringIO] The SVG or PNG representation of the QR code
+    def self.build(text:, config: {})
+      new(text:, config:).build
     end
 
     def build

@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 module QrForge
-  module Designs
+  module Components
     module Module
       # Circle component for the individual module.
-      class Circle < ForgeDesign
-
+      class Circle < ForgeComponent
         # @see ForgeComponent#draw
-        def draw(y:, x:, quiet_zone:, color: 'black', **_)
+        def draw(y:, x:, quiet_zone:, color: "black", **_)
           r = 0.5
           cx = x + r + quiet_zone
           cy = y + r + quiet_zone
@@ -15,6 +16,7 @@ module QrForge
             cy:,
             r:,
             fill: color,
+            test_id: @test_id
           )
         end
       end

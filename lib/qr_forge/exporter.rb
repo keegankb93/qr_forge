@@ -6,10 +6,8 @@ module QrForge
   #
   # Handles exporting the generated QR code in various formats.
   class Exporter
-    def initialize(size:, canvas_size:, export_options: {})
-      @size = size
-      @canvas_size = canvas_size
-      @format = export_options[:format] || :svg
+    def initialize(config:)
+      @format = config.dig(:output, :format) || :svg
     end
 
     def export(svg)
@@ -17,7 +15,7 @@ module QrForge
       when :svg
         svg
       when :png
-        export_png(svg)
+        as_png(svg)
       else
         raise "Unsupported export format: #{@format}"
       end
@@ -25,16 +23,16 @@ module QrForge
 
     private
 
-    def export_png(svg)
-      image = Vips::Image.svgload_buffer(svg, dpi: calculate_dpi)
-      buffer = image.write_to_buffer(".png", compression: 9)
-      StringIO.new(buffer)
-    end
+    #
+    # Exports the SVG to PNG format using Vips.
+    # @param svg [String] The SVG content to convert
+    # @return [StringIO] A StringIO object containing the PNG data
+    def as_png(svg)
+      image = Vips::Image.svgload_buffer(svg)
+      # TODO: Compression doesn't really seem to give much noticeable difference in quality or file size.
+      buffer = image.write_to_buffer(".png")
 
-    def calculate_dpi
-      pixels_per_module = @canvas_size.floor
-      # TODO: Allow ppm to be set by user or set by media_type i.e. print, screen etc.
-      pixels_per_module * 8
+      StringIO.new(buffer)
     end
   end
 end

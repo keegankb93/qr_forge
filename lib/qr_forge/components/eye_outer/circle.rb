@@ -1,14 +1,15 @@
-module QrForge
-  module Designs
-    module EyeOuter
-      class Circle < ForgeDesign
+# frozen_string_literal: true
 
+module QrForge
+  module Components
+    module EyeOuter
+      class Circle < ForgeComponent
         DEFAULT_STROKE_WIDTH = 1.0
 
-        # @see ForgeDesign#draw
+        # @see ForgeComponent#draw
         # Draws a circle that fills the full 'area' box, inset by half the stroke so it
         # never overlaps the modules beneath.
-        def draw(y:, x:, quiet_zone:, area:, color: 'black')
+        def draw(y:, x:, quiet_zone:, area:, color: "black", **_)
           stroke_width = DEFAULT_STROKE_WIDTH
 
           # Radius = (full width of box – one stroke) / 2
@@ -24,10 +25,10 @@ module QrForge
             r: r,
             'stroke-width': stroke_width,
             stroke: color,
-            fill: 'transparent'
+            fill: "transparent",
+            test_id: @test_id
           )
         end
-
       end
     end
   end

@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 module QrForge
-  module Designs
+  module Components
     module EyeInner
       #
       # Square component for the inner eye of a finder pattern
       # This draws a 3x3 square in the center of the finder pattern.
-      class Square < ForgeDesign
-
-        # @see ForgeDesign#draw
-        def draw(y:, x:, quiet_zone:, area:, color: 'black', **_)
+      class Square < ForgeComponent
+        # @see ForgeComponent#draw
+        def draw(y:, x:, quiet_zone:, area:, color: "black", **_)
           position_offset = 2
           area_offset = 4
 
@@ -20,7 +21,8 @@ module QrForge
             y:,
             width: area_with_offset,
             height: area_with_offset,
-            fill: 'black'
+            fill: color,
+            test_id: @test_id
           )
         end
       end

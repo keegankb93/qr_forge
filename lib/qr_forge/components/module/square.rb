@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 module QrForge
-  module Designs
+  module Components
     module Module
       # Square component for the individual module.
-      class Square < ForgeDesign
-
+      class Square < ForgeComponent
         # @see ForgeComponent#draw
-        def draw(y:, x:, quiet_zone:, color: 'black', **_)
-          x = x + quiet_zone
-          y = y + quiet_zone
+        def draw(y:, x:, quiet_zone:, color: "black", **_)
+          x += quiet_zone
+          y += quiet_zone
           area = 1
 
           @xml_builder.rect(
@@ -15,7 +16,8 @@ module QrForge
             y:,
             width: area,
             height: area,
-            fill: color
+            fill: color,
+            test_id: @test_id
           )
         end
       end

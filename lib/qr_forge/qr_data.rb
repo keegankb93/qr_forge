@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rqrcode_core/qrcode"
 
 module QrForge
@@ -8,8 +10,8 @@ module QrForge
   class QrData
     attr_reader :modules, :version, :module_count, :quiet_zone
 
-    def initialize(text:, size:, level: :h)
-      qr = RQRCodeCore::QRCode.new(text, size: size, level: level)
+    def initialize(text:, version: 10, level: :h)
+      qr = RQRCodeCore::QRCode.new(text, size: version, level: level)
       @version = qr.version
       @modules = qr.modules.map(&:dup)
       @module_count = @modules.size

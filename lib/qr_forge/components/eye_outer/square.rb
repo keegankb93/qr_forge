@@ -1,12 +1,13 @@
-module QrForge
-  module Designs
-    module EyeOuter
-      class Square < ForgeDesign
+# frozen_string_literal: true
 
-        # @see ForgeDesign#draw
-        def draw(y:, x:, quiet_zone:, area:, color: 'black', **_)
-          x = x + quiet_zone
-          y = y + quiet_zone
+module QrForge
+  module Components
+    module EyeOuter
+      class Square < ForgeComponent
+        # @see ForgeComponent#draw
+        def draw(y:, x:, quiet_zone:, area:, color: "black", **_)
+          x += quiet_zone
+          y += quiet_zone
 
           # Draw the outer black square (7x7)
           @xml_builder.rect(
@@ -22,14 +23,13 @@ module QrForge
           inner = area - 2
 
           @xml_builder.rect(
-            x:      x + inset,
-            y:      y + inset,
-            width:  inner,
+            x: x + inset,
+            y: y + inset,
+            width: inner,
             height: inner,
-            fill:   "white"
+            fill: color,
+            test_id: @test_id
           )
-
-          yield if block_given?
         end
       end
     end

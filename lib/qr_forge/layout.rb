@@ -6,23 +6,23 @@ module QrForge
     FINDER_PATTERN_SIZE = 7
     ALIGNMENT_PATTERN_SIZE = 5
 
-    def initialize(qr_data:, logo: false)
+    def initialize(qr_data:, has_image: false)
       @qr_data = qr_data
       @module_count = qr_data.module_count
       @version = qr_data.version
       @modules = qr_data.modules
-      @logo = logo
+      @has_image = has_image
 
       # build_cache
     end
 
     #
-    # Checks if a given row and column are inside the logo area.
+    # Checks if a given row and column are inside the image area.
     # @param row [Integer] the row index
     # @param col [Integer] the column index
-    # @return [Boolean] true if the row and column are inside the logo area, false otherwise
-    def inside_logo?(row, col)
-      inside_area?(row, col, logo_area)
+    # @return [Boolean] true if the row and column are inside the image area, false otherwise
+    def inside_image?(row, col)
+      inside_area?(row, col, image_area)
     end
 
     #
@@ -44,11 +44,11 @@ module QrForge
     end
 
     #
-    # Returns the logo area as a Range of rows and columns.
-    # The logo area is centered in the QR code and its size is based on the module count.
-    # @return [Range] the range of rows and columns that the logo area covers
-    def logo_area
-      @logo_area ||= begin
+    # Returns the image area as a Range of rows and columns.
+    # The image area is centered in the QR code and its size is based on the module count.
+    # @return [Range] the range of rows and columns that the image area covers
+    def image_area
+      @image_area ||= begin
         raw  = (@module_count * 0.30).round
         size = raw.even? ? raw + 1 : raw
         start_idx = ((@module_count - size) / 2.0).floor
@@ -66,6 +66,7 @@ module QrForge
         offset = @module_count - FINDER_PATTERN_SIZE
         coordinates = [[0, 0], [0, offset], [offset, 0]]
         areas = []
+
         coordinates.map do |row, col|
           areas << [(row...(row + FINDER_PATTERN_SIZE)), (col...(col + FINDER_PATTERN_SIZE))]
         end
@@ -74,7 +75,7 @@ module QrForge
       end
     end
 
-    #
+    # TODO: Remove some complexity out of this method
     # Returns the alignment patterns' coordinates and areas.
     # Coordinates are the top-left corners of the alignment patterns.
     # Areas are the ranges of rows and columns that the alignment patterns cover.
@@ -87,9 +88,9 @@ module QrForge
         # RQRCodeCore provides a helper method to get the alignment pattern centers
         alignment_center_coordinates = RQRCodeCore::QRUtil.get_pattern_positions(@version)
 
-        # Filter out centers that are inside finder patterns or the logo area
+        # Filter out centers that are inside finder patterns or the image area
         valid_alignment_coordinates = alignment_center_coordinates.product(alignment_center_coordinates).reject do |center_row, center_col|
-          inside_finder?(center_row, center_col) || (@logo && inside_logo?(center_row, center_col))
+          inside_finder?(center_row, center_col) || (@has_image && inside_image?(center_row, center_col))
         end
 
         locations = { coordinates: [], areas: [] }

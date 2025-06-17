@@ -11,9 +11,3 @@ gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 
 gem "rubocop", "~> 1.21"
-
-gem "nokogiri", "~> 1.18"
-
-gem "vips", "~> 8.15"
-
-gem "rqrcode_core", "~> 2.0"
