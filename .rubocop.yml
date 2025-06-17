@@ -15,3 +15,6 @@ Naming/MethodParameterName:
 
 Metrics/ParameterLists:
   Max: 10
+
+Metrics/BlockLength:
+  Max: 150

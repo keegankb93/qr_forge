@@ -4,7 +4,6 @@ module QrForge
   #
   # Entry point for building QRCodes
   class Forge
-
     def initialize(text:, config:)
       version = config.dig(:qr, :version)
 

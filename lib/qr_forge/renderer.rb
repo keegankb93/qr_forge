@@ -47,8 +47,8 @@ module QrForge
       @quiet_zone = 4
       @module_count = qr_data.module_count
       @image = config.dig(:design, :image)
-      @width = config.dig(:output, :width)
-      @height = config.dig(:output, :width)
+      @width = config.dig(:design, :size)
+      @height = config.dig(:design, :size)
       @colors = DEFAULT_COLORS.merge(config.dig(:design, :colors) || {})
       @layout = QrForge::Layout.new(qr_data:, has_image: image_present?)
     end
@@ -137,7 +137,7 @@ module QrForge
       @layout.finder_patterns[:coordinates].each.with_index do |(r, c), idx|
         %i[outer_eye inner_eye].each do |layer|
           @components[layer]
-            .new(xml_builder: xml, test_id: "finder_pattern_#{idx}")
+            .new(xml_builder: xml, test_id: "finder_pattern_#{layer}_#{idx}")
             .draw(y: r, x: c, quiet_zone: @quiet_zone, area: QrForge::Layout::FINDER_PATTERN_SIZE, color: @colors[layer])
         end
       end
@@ -152,7 +152,7 @@ module QrForge
       @layout.alignment_patterns[:coordinates].each.with_index do |(r, c), idx|
         %i[outer_eye inner_eye].each do |layer|
           @components[layer]
-            .new(xml_builder: xml, test_id: "alignment_pattern_#{idx}")
+            .new(xml_builder: xml, test_id: "alignment_pattern_#{layer}_#{idx}")
             .draw(y: r, x: c, quiet_zone: @quiet_zone, area: size, color: @colors[layer])
         end
       end
