@@ -6,15 +6,21 @@ This library is a QR Code renderer that lets you customize almost every aspect o
 
 # Installation
 
-```gem install qr_forge```
+```shell 
+gem install qr_forge
+```
 
 or if using bundler
 
-```bundle add qr_forge```
+```shell
+bundle add qr_forge
+```
 
 Note: To export in the PNG format you will also want to install vips on your machine
 
-```brew install vips```
+```shell
+brew install vips
+```
 
 # Usage
 
