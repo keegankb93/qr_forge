@@ -38,9 +38,12 @@ QrForge::Forge.build(
     components: { inner_eye: QrForge::Components::EyeInner::Square },
     design: {
       size: 800,
-      colors: { module: 'blue', outer_eye: 'cyan', inner_eye: 'skyblue' }
+      colors: { module: 'blue', outer_eye: 'cyan', inner_eye: 'skyblue' },
+      image: Base64.strict_encode64(...)
     },
-    output: { format: :png }})
+    output: { format: :png }
+  }
+)
 ```
 
 ##### QR
