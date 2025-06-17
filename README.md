@@ -1,5 +1,6 @@
 # !! Docs are still being written !! #
 ![output](https://github.com/user-attachments/assets/71edb1aa-2182-4cd3-bb28-ec4f71336029)
+An example of the output of QR Forge
 
 # QR Forge
 
