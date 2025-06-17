@@ -1,5 +1,5 @@
 # !! Docs are still being written !! #
-![output](https://github.com/user-attachments/assets/c033f793-16c7-4dd8-a7cf-08b61dea0f1e)
+![output](https://github.com/user-attachments/assets/71edb1aa-2182-4cd3-bb28-ec4f71336029)
 
 # QR Forge
 
