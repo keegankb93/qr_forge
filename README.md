@@ -158,21 +158,29 @@ If you create your own designs, follow the same pattern and pass them into the c
 
 ##### Design
 
-```size: 800```
+```
+size: 800
+```
 
 This sets the width and height of the svg. I recommend that you set this to a higher value than you plan to use as the SVG will scale well without needing to use any image processing like vips. If you do want to use your own strategies for image processing, I still recommend a higher size and do with the SVG as you wish.
 
-```colors: { module: 'blue', outer_eye: 'cyan', inner_eye: 'skyblue' }```
+```
+colors: { module: 'blue', outer_eye: 'cyan', inner_eye: 'skyblue' }
+```
 
 This will set the fill or stroke appropriately for the respective component.
 
-``` image: ...```
+``` 
+image: ...
+```
 
 A base64 encoded image that will be placed in the center of your QR Code. This scales with the version of the QR Code and is strictly set as to make sure that we do not remove more data that can be recovered through the error correcting algorithms.
 
 ##### Output
 
-``` output: { format: :png }})```
+```
+output: { format: :png }})
+```
 
 This will use vips to process the svg and return it as a PNG. If you want to do your own image processing, you can leave this off as the default is the raw SVG string.
 
