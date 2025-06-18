@@ -1,7 +1,5 @@
 # frozen_string_literal: true
-
-puts "[Geo] file loaded"
-
+#
 module QrForge
   module Payloads
     #
