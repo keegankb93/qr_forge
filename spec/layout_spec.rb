@@ -3,7 +3,7 @@
 RSpec.describe QrForge, type: :feature do
   it "renders a module" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: { qr: { version: 10 } }
     )
 
@@ -14,7 +14,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "renders 3 outer_eye patterns" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: { qr: { version: 10 } }
     )
 
@@ -25,7 +25,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "renders 3 inner_eye patterns" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: { qr: { version: 10 } }
     )
 
@@ -36,7 +36,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "renders 6 alignment outer_eye patterns" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: { qr: { version: 10 } }
     )
 
@@ -47,7 +47,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "renders 6 alignment inner_eye patterns" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: { qr: { version: 10 } }
     )
 
@@ -59,7 +59,7 @@ RSpec.describe QrForge, type: :feature do
   it "renders 1 image if provided" do
     image = Base64.strict_encode64("https://example.com/image.png")
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: {
         qr: { version: 10 },
         design: { image: }
@@ -74,11 +74,11 @@ RSpec.describe QrForge, type: :feature do
   it "sets the image size relative to the QR code size" do
     image = Base64.strict_encode64("https://example.com/image.png")
     text = "https://example.com"
-    qr_data = QrForge::QrData.new(text: "https://example.com")
+    qr_data = QrForge::QrData.new(text:)
     layout = QrForge::Layout.new(qr_data:, has_image: true)
 
     svg = QrForge::Forge.build(
-      text:,
+      data: text,
       config: {
         qr: { version: 10 },
         design: {
@@ -96,11 +96,11 @@ RSpec.describe QrForge, type: :feature do
   it "removes the modules out of the image area" do
     image = Base64.strict_encode64("https://example.com/image.png")
     text = "https://example.com"
-    qr_data = QrForge::QrData.new(text: "https://example.com")
+    qr_data = QrForge::QrData.new(text:)
     layout = QrForge::Layout.new(qr_data:, has_image: true)
 
     svg = QrForge::Forge.build(
-      text:,
+      data: text,
       config: {
         qr: { version: 10 },
         design: {

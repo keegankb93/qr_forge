@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "qr_forge"
+#QrForge.loader.eager_load(force: true)
 require "rspec"
 require "capybara"
 require "base64"

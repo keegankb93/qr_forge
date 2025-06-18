@@ -4,7 +4,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "colors the outer_eye blue" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: {
         qr: { version: 10 },
         design: {
@@ -23,7 +23,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "colors the inner_eye blue" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: {
         qr: { version: 10 },
         design: {
@@ -42,7 +42,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "colors the module blue" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: {
         qr: { version: 10 },
         design: {
@@ -61,7 +61,7 @@ RSpec.describe QrForge, type: :feature do
 
   it "sets the height and width of the SVG" do
     svg = QrForge::Forge.build(
-      text: "https://example.com",
+      data: "https://example.com",
       config: {
         qr: { version: 10 },
         design: {

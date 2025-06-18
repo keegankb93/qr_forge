@@ -4,7 +4,7 @@ RSpec.describe QrForge, type: :feature do
   context "when outer_eye" do
     it "renders as a square" do
       svg = QrForge::Forge.build(
-        text: "https://example.com",
+        data: "https://example.com",
         config: {
           qr: { version: 10 },
           components: {
@@ -20,7 +20,7 @@ RSpec.describe QrForge, type: :feature do
 
     it "renders as a circle" do
       svg = QrForge::Forge.build(
-        text: "https://example.com",
+        data: "https://example.com",
         config: {
           qr: { version: 10 },
           components: {
@@ -38,7 +38,7 @@ RSpec.describe QrForge, type: :feature do
   context "when inner_eye" do
     it "renders as a square" do
       svg = QrForge::Forge.build(
-        text: "https://example.com",
+        data: "https://example.com",
         config: {
           qr: { version: 10 },
           components: {
@@ -54,7 +54,7 @@ RSpec.describe QrForge, type: :feature do
 
     it "renders as a circle" do
       svg = QrForge::Forge.build(
-        text: "https://example.com",
+        data: "https://example.com",
         config: {
           qr: { version: 10 },
           components: {
@@ -72,7 +72,7 @@ RSpec.describe QrForge, type: :feature do
   context "when module" do
     it "renders as a square" do
       svg = QrForge::Forge.build(
-        text: "https://example.com",
+        data: "https://example.com",
         config: {
           qr: { version: 10 },
           components: {
@@ -88,7 +88,7 @@ RSpec.describe QrForge, type: :feature do
 
     it "renders as a circle" do
       svg = QrForge::Forge.build(
-        text: "https://example.com",
+        data: "https://example.com",
         config: {
           qr: { version: 10 },
           components: {

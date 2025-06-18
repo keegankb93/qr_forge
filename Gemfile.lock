@@ -1,7 +1,13 @@
 PATH
   remote: .
   specs:
-    qr_forge (0.9.0)
+    qr_forge (1.0)
+      base64 (~> 0.3.0)
+      nokogiri (~> 1.18)
+      rqrcode_core (~> 2.0)
+      vips (~> 8.15)
+      zeitwerk (~> 2.6)
+    qr_forge (1.0.0)
       base64 (~> 0.3.0)
       nokogiri (~> 1.18)
       rqrcode_core (~> 2.0)
