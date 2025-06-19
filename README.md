@@ -18,51 +18,124 @@ or if using bundler
 bundle add qr_forge
 ```
 
-Note: To export in the PNG format you will also want to install vips on your machine
-
-```shell
-brew install vips
-```
-
 # Usage
 
 To create a QR Code you can simply do the following:
 
-```ruby
-QrForge::Forge.build(text: "https://yourlinkhere.com")
-```
+### Payloads
 
-If you want an (SVG) QRCode fast, that's all there is to it. Everything else is covered by default values, however, you can tweak anything you want, which we will go through in the next section.
+Did you know that QR Codes can store different pieces of data such as wifi access, passkeys, geolocation and quite a few more! Below are a few different types of data payloads that are implemented with in the gem. More will be added as needed.
 
-## Configuration
-
-The library tries to provide sensible defaults, but defaults can be subjective, so the following shows a configuration object that you can pass to the QR Code.
+#### Plain text
 
 ```ruby
-QrForge::Forge.build(
-  text: "https://www.google.com",
-  config: {
-    qr: { version: 10 },
-    components: { inner_eye: QrForge::Components::EyeInner::Square },
-    design: {
-      size: 800,
-      colors: { module: 'blue', outer_eye: 'cyan', inner_eye: 'skyblue' },
-      image: Base64.strict_encode64(...)
-    },
-    output: { format: :png }
-  }
-)
+QrForge::Forge.build(data: "https://yourlinkhere.com", type: :plain)
 ```
+
+#### URL
+
+```ruby
+QrForge::Forge.build(data: "https://yourlinkhere.com", type: :url)
+```
+
+#### Wifi
+
+```ruby
+QrForge::Payload.build(data: { ssid: "MyNetwork", password: "MyPassword", encryption: "WPA" }, type: :wifi)
+```
+Fields: 
+- ssid,
+- password
+- encryption (WEP WPA WPA2 WPA3)
+- hidden (true/false)
+
+>[!NOTE]
+>You can also pass "nopass" to encryption which means a password does not need to be provided either (public wifi etc.)
+
+#### Geo/Coordinates
+
+```ruby
+QrForge::Payload.build(data: { latitude: 40.712776, longitude: -74.005974 }, type: :geo)
+```
+Fields:
+- latitude
+- longitude
+
+#### Phone number
+
+```ruby
+QrForge::Payload.build(data: "+1234567890", type: :phone)
+QrForge::Payload.build(data: "1234567890", type: :phone)
+QrForge::Payload.build(data: "123-456-7890", type: :phone)
+QrForge::Payload.build(data: "(123) 456-7890", type: :phone)
+QrForge::Payload.build(data: "123.456.7890", type: :phone)
+```
+
+More are planned to be added.
+
+### Design
+
+Design controls the look and feel of the QR Code from the [QR Version](https://www.qrcode.com/en/about/version.html) to the colors of the individual modules.
 
 ##### QR
 
-This hash provides details to the underlying QR code generator (see: https://github.com/whomwah/rqrcode_core).
+```ruby
+QrForge::Payload.build(..., design: { qr { version: 10 } }, ...)
+```
+Fields:
+- Version
+  
+##### Image
 
-_version_ dictates the module count or size of the QR Code and how much data it can hold. It does not necessarily dictate the dimensions, however, it will be unreadable if you choose too small of a size, but a larger QR code version. (see: https://www.qrcode.com/en/about/version.html)
+```ruby
+QrForge::Payload.build(..., design: { image: "..." }, ...)
+```
+The image should be a **Base64 encoded** image like the following:
 
-##### Components
+```ruby
+Base64.strict_encode64(image_png_binary)
+```
+More image formats will be added as needed or required.
 
-This hash can have up to 3 components:
+##### Colors
+
+```ruby
+QrForge::Payload.build(..., design: {colors: { outer_eye: "#30363D", inner_eye: "#30363D", module: "#484F58" }, ...)
+```
+Fields:
+- outer_eye
+- inner_eye
+- module
+  
+Any hex code or plain color such as "red", "cyan", "peru", etc. will work as the color value.
+
+See the Components section for more details on which field references what component of the QR Code.
+
+### Output
+
+```ruby
+QrForge::Payload.build(..., output: { size: 250 }, ...)
+```
+Fields:
+- size
+  
+QR Codes are equal in height and width, the size will control the width and height of the returned SVG.
+
+There is only an ouput of SVG format, see this PR for reasoning: https://github.com/keegankb93/qr_forge/pull/1
+
+If different formats are a requirement and that requirement means the image conversion should take place in the gem, send me a message with your usecase. SVG as the format should be good for almost all usecases.
+
+### Components
+
+```ruby
+QrForge::Payload.build(..., components: {
+                              outer_eye: QrForge::Components::EyeOuter::Square,
+                              inner_eye: QrForge::Components::EyeInner::Square,
+                              module: QrForge::Components::Module::Squre
+                            },
+                        ...)
+```
+Fields:
 - outer_eye
 <img width="77" alt="Screenshot 2025-06-17 at 1 23 39 AM" src="https://github.com/user-attachments/assets/ccef3f08-cc4b-43c7-95b4-8d6c707f5f5a" />
 
@@ -72,123 +145,33 @@ This hash can have up to 3 components:
 - module
 <img width="216" alt="Screenshot 2025-06-17 at 1 25 24 AM" src="https://github.com/user-attachments/assets/f670d5fd-e2dc-42cc-9bff-d77a51d65fa1" />
 
-This is what the circle outer_eye component looks like:
+You can create your own designs and pass them through as long as they inherit from the ForgeComponent. If you create your own designs, when you pass them through the config, it will merge them with the default components, so if you only want to change one or two of the components, but not all three, you can!
+
+>[!NOTE]
+>More designs are to come, so not every facet of qr code manipulation may be available at this time such as module look aheads/behinds. This is >coming soon.
+
+### Example
+
+This is the code that was used to create the QR Code at the top of the page.
 
 ```ruby
-# frozen_string_literal: true
-
-module QrForge
-  module Components
-    module EyeOuter
-      class Circle < ForgeComponent
-        DEFAULT_STROKE_WIDTH = 1.0
-
-        # @see ForgeComponent#draw
-        # Draws a circle that fills the full 'area' box, inset by half the stroke so it
-        # never overlaps the modules beneath.
-        def draw(y:, x:, quiet_zone:, area:, color: "black", **_)
-          stroke_width = DEFAULT_STROKE_WIDTH
-
-          # Radius = (full width of box – one stroke) / 2
-          r = (area - stroke_width) / 2.0
-
-          # Center of the N×N box (plus quiet_zone offset)
-          cx = x + quiet_zone + (area / 2.0)
-          cy = y + quiet_zone + (area / 2.0)
-
-          @xml_builder.circle(
-            cx: cx,
-            cy: cy,
-            r: r,
-            'stroke-width': stroke_width,
-            stroke: color,
-            fill: "transparent",
-            test_id: @test_id
-          )
-        end
-      end
-    end
-  end
-end
+QrForge::Forge.build(data: "https://www.github.com/keegankb93/qr_forge",
+                     type: :url,
+                     config: {
+                       qr: { version: 5 },
+                       design: {
+                         image:,
+                         colors: {
+                           outer_eye: "#30363D",
+                           inner_eye: "#30363D",
+                           module: "#484F58"
+                         }
+                       },
+                       output: { size: 250 }
+                     })
 ```
 
-And the square for comparison:
-
-```ruby
-# frozen_string_literal: true
-
-module QrForge
-  module Components
-    module EyeOuter
-      class Square < ForgeComponent
-        # @see ForgeComponent#draw
-        def draw(y:, x:, quiet_zone:, area:, color: "black", **_)
-          x += quiet_zone
-          y += quiet_zone
-
-          # Draw the outer black square (7x7)
-          @xml_builder.rect(
-            x:,
-            y:,
-            width: area,
-            height: area,
-            fill: color
-          )
-
-          # Draw the inner (cutout) square (5x5) to create the finder pattern
-          inset = 1
-          inner = area - 2
-
-          @xml_builder.rect(
-            x: x + inset,
-            y: y + inset,
-            width: inner,
-            height: inner,
-            fill: color,
-            test_id: @test_id
-          )
-        end
-      end
-    end
-  end
-end
-```
-
-All components must inherit from the base ForgeComponent. You can look at that to see what is available to be used (this is on the roadmap to allow more design variations).
-
-If you create your own designs, follow the same pattern and pass them into the components config. It will merge them with the default components, so if you only want to change one or two of the components, but not all three, you can!
-
-##### Design
-
-```
-size: 800
-```
-
-This sets the width and height of the svg. I recommend that you set this to a higher value than you plan to use as the SVG will scale well without needing to use any image processing like vips. If you do want to use your own strategies for image processing, I still recommend a higher size and do with the SVG as you wish.
-
-```
-colors: { module: 'blue', outer_eye: 'cyan', inner_eye: 'skyblue' }
-```
-
-This will set the fill or stroke appropriately for the respective component.
-
-``` 
-image: ...
-```
-
-A base64 encoded image that will be placed in the center of your QR Code. This scales with the version of the QR Code and is strictly set as to make sure that we do not remove more data that can be recovered through the error correcting algorithms.
-
-##### Output
-
-```
-output: { format: :png }})
-```
-
-This will use vips to process the svg and return it as a PNG. If you want to do your own image processing, you can leave this off as the default is the raw SVG string.
-
-
-## Roadmap
-- Color gradients for components
-- More data types i.e. wifi, passkey etc.
+### Roadmap
+- Color gradients for outer and inner eyes
 - Image background and shape improvements
 - More default component selections
