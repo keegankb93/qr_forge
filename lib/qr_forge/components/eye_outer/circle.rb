@@ -23,7 +23,7 @@ module QrForge
             cx: cx,
             cy: cy,
             r: r,
-            'stroke-width': stroke_width,
+            "stroke-width": stroke_width,
             stroke: color,
             fill: "transparent",
             test_id: @test_id

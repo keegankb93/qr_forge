@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe QrForge, type: :feature do
-
   it "colors the outer_eye blue" do
     svg = QrForge::Forge.build(
       data: "https://example.com",

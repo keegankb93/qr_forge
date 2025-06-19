@@ -8,7 +8,7 @@ RSpec.describe QrForge, type: :feature do
         config: {
           qr: { version: 10 },
           components: {
-            outer_eye: ::QrForge::Components::EyeOuter::Square
+            outer_eye: QrForge::Components::EyeOuter::Square
           }
         }
       )
@@ -24,7 +24,7 @@ RSpec.describe QrForge, type: :feature do
         config: {
           qr: { version: 10 },
           components: {
-            outer_eye: ::QrForge::Components::EyeOuter::Circle
+            outer_eye: QrForge::Components::EyeOuter::Circle
           }
         }
       )
@@ -42,7 +42,7 @@ RSpec.describe QrForge, type: :feature do
         config: {
           qr: { version: 10 },
           components: {
-            inner_eye: ::QrForge::Components::EyeInner::Square
+            inner_eye: QrForge::Components::EyeInner::Square
           }
         }
       )
@@ -58,7 +58,7 @@ RSpec.describe QrForge, type: :feature do
         config: {
           qr: { version: 10 },
           components: {
-            inner_eye: ::QrForge::Components::EyeInner::Circle
+            inner_eye: QrForge::Components::EyeInner::Circle
           }
         }
       )
@@ -76,7 +76,7 @@ RSpec.describe QrForge, type: :feature do
         config: {
           qr: { version: 10 },
           components: {
-            module: ::QrForge::Components::Module::Square
+            module: QrForge::Components::Module::Square
           }
         }
       )
@@ -92,7 +92,7 @@ RSpec.describe QrForge, type: :feature do
         config: {
           qr: { version: 10 },
           components: {
-            module: ::QrForge::Components::Module::Circle
+            module: QrForge::Components::Module::Circle
           }
         }
       )
