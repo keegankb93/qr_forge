@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'nokogiri'
+require "nokogiri"
 
 module QrForge
   #
@@ -46,7 +46,7 @@ module QrForge
       @quiet_zone = 4
       @module_count = qr_data.module_count
       @image = config.dig(:design, :image)
-      @size = config.dig(:output, :size)
+      @size = config.dig(:design, :size)
       @colors = DEFAULT_COLORS.merge(config.dig(:design, :colors) || {})
       @layout = QrForge::Layout.new(qr_data:, has_image: image_present?)
     end

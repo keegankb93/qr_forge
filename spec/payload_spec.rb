@@ -123,9 +123,10 @@ RSpec.describe QrForge do
     end
 
     it "raises an error for missing SSID" do
+      # This is handled in initialize now as a required keyword argument
       expect do
         ::QrForge::Payload.build(data: { encryption: "WPA", password: "MyPassword" }, type: :wifi)
-      end.to raise_error(QrForge::Payloads::PayloadValidationError, "SSID cannot be blank")
+      end.to raise_error(ArgumentError, "missing keyword: :ssid")
     end
 
     it "raises an error for invalid encryption type" do

@@ -20,7 +20,7 @@ module QrForge
     #   - `:qr` - QR code specific settings (e.g., version).
     #   - `:design` - Design specific settings (e.g., colors, shapes).
     #   - `:output` - Export specific settings (e.g., format).
-    # @return [String, StringIO] The SVG or PNG representation of the QR code
+    # @return [String] The SVG or PNG representation of the QR code
     def self.build(data:, type: :url, config: {})
       new(data:, type:, config:).build
     end
