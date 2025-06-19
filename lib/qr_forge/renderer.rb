@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "nokogiri"
-require_relative "layout"
 
 module QrForge
   #
@@ -47,8 +46,7 @@ module QrForge
       @quiet_zone = 4
       @module_count = qr_data.module_count
       @image = config.dig(:design, :image)
-      @width = config.dig(:design, :size)
-      @height = config.dig(:design, :size)
+      @size = config.dig(:output, :size)
       @colors = DEFAULT_COLORS.merge(config.dig(:design, :colors) || {})
       @layout = QrForge::Layout.new(qr_data:, has_image: image_present?)
     end
@@ -58,10 +56,11 @@ module QrForge
     def to_svg
       Nokogiri::XML::Builder.new(encoding: "UTF-8") do |xml|
         xml.svg(
-          width: @width || canvas_size,
-          height: @height || canvas_size,
+          width: @size,
+          height: @size,
           xmlns: "http://www.w3.org/2000/svg",
-          viewBox: "0 0 #{canvas_size} #{canvas_size}"
+          viewBox: "0 0 #{canvas_size} #{canvas_size}",
+          shape_rendering: "crispEdges"
         ) do
           draw_background(xml)
           draw_image(xml)
@@ -98,10 +97,10 @@ module QrForge
     def draw_image(xml)
       return unless image_present? && @qr_data.version >= 2
 
-      image_range = @layout.image_area # a Range (row indices) for the image
+      image_range = @layout.image_area # row indices for the image
       size = image_range.size # width/height in modules
 
-      # Convert module coords → SVG coords (including quiet zone)
+      # Convert module coords to SVG coords (including quiet zone)
       x = image_range.first + @quiet_zone
       y = image_range.first + @quiet_zone
 

@@ -1,4 +1,6 @@
-require 'uri'
+# frozen_string_literal: true
+
+require "uri"
 
 module QrForge
   module Payloads
@@ -6,7 +8,6 @@ module QrForge
     # Represents a URL payload
     # @example return "https://example.com" or "http://example.com"
     class Url
-
       def initialize(url)
         @url = url
       end

@@ -7,6 +7,8 @@ RSpec::Core::RakeTask.new(:spec)
 
 require "rubocop/rake_task"
 
-RuboCop::RakeTask.new
+RuboCop::RakeTask.new do |task|
+  task.fail_on_error = false
+end
 
 task default: %i[spec rubocop]

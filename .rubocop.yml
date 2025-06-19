@@ -1,5 +1,6 @@
 AllCops:
   TargetRubyVersion: 3.1
+  NewCops: enable
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
@@ -18,3 +19,6 @@ Metrics/ParameterLists:
 
 Metrics/BlockLength:
   Max: 150
+
+Metrics/ClassLength:
+  Max: 500

@@ -1,4 +1,4 @@
-require 'uri'
+# frozen_string_literal: true
 
 module QrForge
   module Payloads
@@ -6,7 +6,6 @@ module QrForge
     # Represents a telephone payload
     # @example return "https://example.com" or "http://example.com"
     class Phone
-
       def initialize(phone_number)
         @phone_number = phone_number
       end
