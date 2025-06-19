@@ -97,6 +97,9 @@ Base64.strict_encode64(image_png_binary)
 ```
 More image formats will be added as needed or required.
 
+>[!NOTE]
+>The size of the logo will scale relative to the version of the QR Code (and the SVG width/height for that matter). This is due to how we use the error-correction algorithm for QR Codes to show a logo, in other words, the logo can only take up so much space before the data becomes unreadable.
+
 ##### Colors
 
 ```ruby
