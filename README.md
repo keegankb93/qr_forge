@@ -80,7 +80,7 @@ Design controls the look and feel of the QR Code from the [QR Version](https://w
 ##### QR
 
 ```ruby
-QrForge::Payload.build(..., design: { qr { version: 10 } }, ...)
+QrForge::Payload.build(..., design: { qr: { version: 10 } }, ...)
 ```
 Fields:
 - Version
