@@ -63,7 +63,7 @@ RSpec.describe QrForge, type: :feature do
       data: "https://example.com",
       config: {
         qr: { version: 10 },
-        design: {
+        output: {
           size: 200
         }
       }
