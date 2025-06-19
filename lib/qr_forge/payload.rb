@@ -6,7 +6,7 @@ module QrForge
   # It will validate the payload data (based on the type) and return a string representation of the payload.
   class Payload
 
-    # TODO: Add passkey and sms support
+    # TODO: Add passkey and sms support and vcard
     PAYLOAD_TYPES = {
       wifi: ::QrForge::Payloads::Wifi,
       plain: ::QrForge::Payloads::PlainText,

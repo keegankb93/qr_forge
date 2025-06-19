@@ -13,8 +13,6 @@ Gem::Specification.new do |spec|
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1.0"
 
-  #spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/keegankb93/qr_forge"
   spec.metadata["changelog_uri"] = "https://github.com/keegankb93/qr_forge/blob/main/CHANGELOG.md"
@@ -36,7 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "base64", "~> 0.3.0"
   spec.add_dependency "nokogiri", "~> 1.18"
   spec.add_dependency "rqrcode_core", "~> 2.0"
-  spec.add_dependency "vips", "~> 8.15"
   spec.add_dependency "zeitwerk", "~> 2.6"
 
   spec.add_development_dependency "capybara", "~> 3.40"

@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
-require "vips"
-
 module QrForge
   #
   # Handles exporting the generated QR code in various formats.
   class Exporter
     def initialize(config:)
       @format = config.dig(:output, :format) || :svg
+      @clean_output = config.dig(:output, :clean_output) != false
     end
 
     def export(svg)
       case @format
       when :svg
-        svg
-      when :png
-        as_png(svg)
+        clean_svg(svg)
       else
         raise "Unsupported export format: #{@format}"
       end
@@ -24,15 +21,13 @@ module QrForge
     private
 
     #
-    # Exports the SVG to PNG format using Vips.
-    # @param svg [String] The SVG content to convert
-    # @return [StringIO] A StringIO object containing the PNG data
-    def as_png(svg)
-      image = Vips::Image.svgload_buffer(svg)
-      # TODO: Compression doesn't really seem to give much noticeable difference in quality or file size.
-      buffer = image.write_to_buffer(".png")
-
-      StringIO.new(buffer)
+    # Cleans the SVG by removing test_id attributes.
+    # @param svg [String] The generated SVG
+    # @return [String] The cleaned SVG content
+    def clean_svg(svg)
+      doc = Nokogiri::XML(svg)
+      doc.xpath("//@test_id").remove
+      doc.to_xml
     end
   end
 end
