@@ -109,7 +109,7 @@ Fields:
   
 Any hex code or plain color such as "red", "cyan", "peru", etc. will work as the color value.
 
-See the Components section for more details on which field references what component of the QR Code.
+See the [Components](https://github.com/keegankb93/qr_forge/blob/main/README.md#components) section for more details on which field references what component of the QR Code.
 
 ### Output
 
