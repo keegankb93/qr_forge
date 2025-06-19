@@ -155,6 +155,7 @@ You can create your own designs and pass them through as long as they inherit fr
 This is the code that was used to create the QR Code at the top of the page.
 
 ```ruby
+image = Base64.strict_encode64(Base64.strict_encode64(File.binread("logo-github.png"))
 QrForge::Forge.build(data: "https://www.github.com/keegankb93/qr_forge",
                      type: :url,
                      config: {
