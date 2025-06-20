@@ -41,7 +41,7 @@ QrForge::Forge.build(data: "https://yourlinkhere.com", type: :url)
 #### Wifi
 
 ```ruby
-QrForge::Payload.build(data: { ssid: "MyNetwork", password: "MyPassword", encryption: "WPA" }, type: :wifi)
+QrForge::Forge.build(data: { ssid: "MyNetwork", password: "MyPassword", encryption: "WPA" }, type: :wifi)
 ```
 Fields: 
 - ssid,
@@ -55,7 +55,7 @@ Fields:
 #### Geo/Coordinates
 
 ```ruby
-QrForge::Payload.build(data: { latitude: 40.712776, longitude: -74.005974 }, type: :geo)
+QrForge::Forge.build(data: { latitude: 40.712776, longitude: -74.005974 }, type: :geo)
 ```
 Fields:
 - latitude
@@ -64,11 +64,11 @@ Fields:
 #### Phone number
 
 ```ruby
-QrForge::Payload.build(data: "+1234567890", type: :phone)
-QrForge::Payload.build(data: "1234567890", type: :phone)
-QrForge::Payload.build(data: "123-456-7890", type: :phone)
-QrForge::Payload.build(data: "(123) 456-7890", type: :phone)
-QrForge::Payload.build(data: "123.456.7890", type: :phone)
+QrForge::Forge.build(data: "+1234567890", type: :phone)
+QrForge::Forge.build(data: "1234567890", type: :phone)
+QrForge::Forge.build(data: "123-456-7890", type: :phone)
+QrForge::Forge.build(data: "(123) 456-7890", type: :phone)
+QrForge::Forge.build(data: "123.456.7890", type: :phone)
 ```
 
 More are planned to be added.
@@ -80,7 +80,7 @@ Design controls the look and feel of the QR Code from the [QR Version](https://w
 ##### QR
 
 ```ruby
-QrForge::Payload.build(..., design: { qr: { version: 10 } }, ...)
+QrForge::Forge.build(..., design: { qr: { version: 10 } }, ...)
 ```
 Fields:
 - Version
@@ -88,7 +88,7 @@ Fields:
 ##### Image
 
 ```ruby
-QrForge::Payload.build(..., design: { image: "..." }, ...)
+QrForge::Forge.build(..., design: { image: "..." }, ...)
 ```
 The image should be a **Base64 encoded** image like the following:
 
@@ -103,7 +103,7 @@ More image formats will be added as needed or required.
 ##### Colors
 
 ```ruby
-QrForge::Payload.build(..., design: {colors: { outer_eye: "#30363D", inner_eye: "#30363D", module: "#484F58" }, ...)
+QrForge::Forge.build(..., design: {colors: { outer_eye: "#30363D", inner_eye: "#30363D", module: "#484F58" }, ...)
 ```
 Fields:
 - outer_eye
@@ -117,7 +117,7 @@ See the [Components](https://github.com/keegankb93/qr_forge/blob/main/README.md#
 ### Output
 
 ```ruby
-QrForge::Payload.build(..., output: { size: 250 }, ...)
+QrForge::Forge.build(..., output: { size: 250 }, ...)
 ```
 Fields:
 - size
@@ -131,7 +131,7 @@ If different formats are a requirement and that requirement means the image conv
 ### Components
 
 ```ruby
-QrForge::Payload.build(..., components: {
+QrForge::Forge.build(..., components: {
                               outer_eye: QrForge::Components::EyeOuter::Square,
                               inner_eye: QrForge::Components::EyeInner::Square,
                               module: QrForge::Components::Module::Squre
