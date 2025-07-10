@@ -134,7 +134,7 @@ If different formats are a requirement and that requirement means the image conv
 QrForge::Forge.build(..., components: {
                               outer_eye: QrForge::Components::EyeOuter::Square,
                               inner_eye: QrForge::Components::EyeInner::Square,
-                              module: QrForge::Components::Module::Squre
+                              module: QrForge::Components::Module::Square
                             },
                         ...)
 ```
